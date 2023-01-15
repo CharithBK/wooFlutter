@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1041087656249",
+    "firebase_url": "https://projectenvato.firebaseio.com",
+    "project_id": "projectenvato",
+    "storage_bucket": "projectenvato.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1041087656249:android:2521295cfd906f48ccf8e8",
+        "android_client_info": {
+          "package_name": "com.envator.ecom"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1041087656249-ev96gtht0hkslgu667at3hl38v393jnc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-JkPC0ODfwVAWN2KgjCE7LB5j4hVIVY0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1041087656249-ev96gtht0hkslgu667at3hl38v393jnc.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1041087656249-ffmcn2qf7mf175fil0edtc6ucva33ect.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.envator.ecom"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
