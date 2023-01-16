@@ -38,23 +38,28 @@ class _MyAppState extends State<LoginWidget> {
   double? amount;
   String? redirectTo;
   bool isLoading = false;
-  Future<void> _pay() async {
-    var data = await InAppPayments.setSquareApplicationId(
+  dynamic squareAppToken ;
+  dynamic payAmount ;
+  dynamic currencyType ;
+  void _pay(double amount,String currencyCode) async {
+    payAmount = amount;
+    currencyType = currencyCode;
+    await InAppPayments.setSquareApplicationId(
         'sandbox-sq0idb-wDh9qCOC6PtHvOXVHc2i9g');
     InAppPayments.startCardEntryFlow(
         onCardNonceRequestSuccess: _onCardNonceRequestSuccess,
         onCardEntryCancel: _onCardEntryCancel);
   }
-
-
   void _onCardEntryCancel() {}
   void _onCardNonceRequestSuccess(CardDetails result) {
-    print("result====>$result");
+    squareAppToken = result.nonce;
     InAppPayments.completeCardEntry(onCardEntryComplete: _cardEntryComplete);
   }
 
-  void _cardEntryComplete() {
-    //Navigator.pushReplacementNamed(context, "/home");
+  void _cardEntryComplete()  {
+    WooHttpRequest result = new WooHttpRequest();
+    result.paymentSquare(payAmount,currencyType);
+    Navigator.pushReplacementNamed(context, "/home");
   }
   @override
   void initState() {
@@ -171,10 +176,13 @@ class _MyAppState extends State<LoginWidget> {
                   children: [
                     BusyButton(
                       title: 'Login',
-                      onPressed: () {
-                        addNewUser(emailController.text, passwordController.text);
-                      },
-                      // onPressed: _pay,
+                      // onPressed: () {
+                      //   addNewUser(emailController.text, passwordController.text);
+                      // },
+                      onPressed: () { _pay(40.00, 'USD');
+
+
+                        },
                     )
                   ],
                 ),

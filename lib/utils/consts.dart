@@ -23,6 +23,9 @@ final String WOOCOMM_JWT_USERNAME="adminver_temp";
 final String WOOCOMM_JWT_USERPASS="adminver_temp";
 final String HEROKUTOKEN_SERVER="https://frozen-shelf-98661.herokuapp.com/";
 
+final String SQUARE_SERVER="https://connect.squareupsandbox.com/v2/";
+final String SQUARE_KEY="EAAAECt21KsSMUG6dtWItdG_MCMXsM5Kxusso7jORPxw3Sv4YgSWfMa0hhpOWwsd";
+
 final String PAYPAL_SERVER="https://api.sandbox.paypal.com/v1/";
 final String PAYPAL_AUTH_USER="paypal auth user";
 final String PAYPAL_AUTH_PASS="paypal auth pass";

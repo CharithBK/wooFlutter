@@ -29,28 +29,26 @@ class _CheckOutPaymentScreenState extends State<CheckOutPaymentScreen>  {
 
   final String REQUIRED="__ *";
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  dynamic payAmount ;
+  dynamic currencyType ;
   // Razorpay _razorpay ;
 
-  Future<void> _pay() async {
-    var data = await InAppPayments.setSquareApplicationId(
+  void squarePayment(double amount,String currencyCode) async {
+    payAmount = amount;
+    currencyType = currencyCode;
+    await InAppPayments.setSquareApplicationId(
         'sandbox-sq0idb-wDh9qCOC6PtHvOXVHc2i9g');
     InAppPayments.startCardEntryFlow(
         onCardNonceRequestSuccess: _onCardNonceRequestSuccess,
         onCardEntryCancel: _onCardEntryCancel);
   }
-
-
   void _onCardEntryCancel() {}
   void _onCardNonceRequestSuccess(CardDetails result) {
-
     InAppPayments.completeCardEntry(onCardEntryComplete: _cardEntryComplete);
   }
-
   void _cardEntryComplete() {
-    //     Navigator.push(
-    //       context,
-    //       MaterialPageRoute(builder: (context) => WebViewPaypal(tokenpaypal, urls["approval_url"], urls["execute"], widget.checkOutStep.stepTwo!)),
-    //     );
+    WooHttpRequest result = new WooHttpRequest();
+    result.paymentSquare(payAmount,currencyType);
     Navigator.pushReplacementNamed(context, "/home");
   }
   @override
@@ -206,6 +204,11 @@ class _CheckOutPaymentScreenState extends State<CheckOutPaymentScreen>  {
               onPressed: () async {
                 pr.show(max: 100, msg: LocalLanguageString().processingorderrequest+'...',);
 
+                //squarePayment=============
+                squarePayment(widget.amount, currencyCode);
+
+                //paymentPaypal===============
+
                 // String? tokenpaypal =await WooHttpRequest().getAuthPaypal();
                 // if(tokenpaypal!=null) {
                 //   Map? urls = await WooHttpRequest().paymentPaypal(tokenpaypal, widget.amount, widget.checkOutStep.stepTwo!.shippmentCost, currencyCode);
@@ -217,7 +220,7 @@ class _CheckOutPaymentScreenState extends State<CheckOutPaymentScreen>  {
                 //     );
                 // }
 
-                _pay();
+
               },
               child: Text(
                 "Pay via Square",

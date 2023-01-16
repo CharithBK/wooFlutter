@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:ecom/emuns/apptypes.dart';
 import 'package:ecom/models/api/blogPosts/getBlogPosts.dart';
 import 'package:ecom/models/api/shippingZoneMethod/getShippingZoneMethods.dart';
@@ -566,11 +568,43 @@ class WooHttpRequest {
 
 //-----------------------------------PAYMENTS-----------------------------------------------------//
   //Square
-  // Future<SquareClient?> getAuthSquare() async {
-  //
-  //
-  //   return data ;
-  // }
+  Future<Map?> paymentSquare(double amount, String currencyType) async {
+    String bearerAuth = 'Bearer $SQUARE_KEY';
+    String generateIdempotencyKey() {
+      final random = Random.secure();
+      final key = List<int>.generate(32, (_) => random.nextInt(256), growable: false);
+      return base64Url.encode(key);
+    }
+
+    Map<String, String> headers = {
+      'Content-type': 'application/json',
+      "Accept": "application/json",
+      "Square-Version": "2022-12-14",
+      "Authorization": bearerAuth
+    };
+
+    Map<dynamic, dynamic> bodyMap = {
+      "idempotency_key": generateIdempotencyKey(),
+    "source_id": "cnon:card-nonce-ok",
+      "amount_money": {
+        "amount": amount,
+        "currency": currencyType
+      }
+    };
+    final response = await http.post(
+        Uri.parse(SQUARE_SERVER +"payments"),
+        headers: headers,
+        body: json.encode(bodyMap).toString());
+    if (response.statusCode == 200 || response.statusCode == 201) {
+
+      Map<String,dynamic> responseJson = json.decode(response.body);
+      print('Json=========================================================================> $responseJson');
+
+      return {"approval_url": "approval_url", "execute": "execute"};
+    } else {
+      return null;
+    }
+  }
 
   //paypal
   Future<String?> getAuthPaypal() async {
@@ -596,8 +630,6 @@ class WooHttpRequest {
       return null;
     }
   }
-
-
 
   Future<Map?> paymentPaypal(String token, double amount, double shippingAmount,
       String currencyCode) async {
