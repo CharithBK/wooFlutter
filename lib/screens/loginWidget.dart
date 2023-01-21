@@ -176,13 +176,14 @@ class _MyAppState extends State<LoginWidget> {
                   children: [
                     BusyButton(
                       title: 'Login',
-                      onPressed: () {
-                        addNewUser(emailController.text, passwordController.text);
-                      },
-                      // onPressed: () { _pay(40.00, 'USD');
+                      //uncomment this==================
+                      // onPressed: () {
+                      //   addNewUser(emailController.text, passwordController.text);
+                      // },
 
 
-                      //   },
+                      //just test create payment =======================================
+                      onPressed: () { _pay(40.00, 'USD');},
                     )
                   ],
                 ),

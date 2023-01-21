@@ -205,25 +205,25 @@ class _CheckOutPaymentScreenState extends State<CheckOutPaymentScreen>  {
                 pr.show(max: 100, msg: LocalLanguageString().processingorderrequest+'...',);
 
                 //squarePayment=============
-                squarePayment(widget.amount, currencyCode);
+               // squarePayment(widget.amount, currencyCode);
 
                 //paymentPaypal===============
 
-                // String? tokenpaypal =await WooHttpRequest().getAuthPaypal();
-                // if(tokenpaypal!=null) {
-                //   Map? urls = await WooHttpRequest().paymentPaypal(tokenpaypal, widget.amount, widget.checkOutStep.stepTwo!.shippmentCost, currencyCode);
-                //   pr.close();
-                //   if (urls != null)
-                //     Navigator.push(
-                //       context,
-                //       MaterialPageRoute(builder: (context) => WebViewPaypal(tokenpaypal, urls["approval_url"], urls["execute"], widget.checkOutStep.stepTwo!)),
-                //     );
-                // }
+                String? tokenpaypal =await WooHttpRequest().getAuthPaypal();
+                if(tokenpaypal!=null) {
+                  Map? urls = await WooHttpRequest().paymentPaypal(tokenpaypal, widget.amount, widget.checkOutStep.stepTwo!.shippmentCost, currencyCode);
+                  pr.close();
+                  if (urls != null)
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => WebViewPaypal(tokenpaypal, urls["approval_url"], urls["execute"], widget.checkOutStep.stepTwo!)),
+                    );
+                }
 
 
               },
               child: Text(
-                "Pay via Square",
+                "Pay via Paypal",
                 style: TextStyle(
                   fontFamily: "Normal",
                   fontWeight: FontWeight.w600,
